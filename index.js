@@ -12,6 +12,14 @@ const descInputEl = document.getElementById('desc-field')
 const fromInputEl = document.getElementById('from-field')
 const toInputEl = document.getElementById('to-field')
 
+let clientIP = ''
+fetch('https://api.ipify.org/?format=json')
+  .then(res => res.json())
+  .then(data => {
+    clientIP = data.ip
+  })
+
+
 // fetch data from endorsementList
 onValue(endorsementListDB, (snapshot) => {
   if(snapshot.exists()){
@@ -33,7 +41,6 @@ publishBtn.addEventListener('click', () => {
     desc: descInputEl.value,
     from: fromInputEl.value,
     to: toInputEl.value,
-    isLiked: false,
     likes: 0
   }
   push(endorsementListDB, newEndorsement)
@@ -75,18 +82,30 @@ function appendItemToendorsementListEl(item){
   const heartSpan = document.createElement('span')
   heartSpan.textContent = `🖤`
   heartSpan.addEventListener('click', () => {
-    if(value.isLiked){
+
+    if('likedIpAddresses' in value && value.likedIpAddresses.includes(clientIP)){
+      
+      const newlikedIpAddresses = value.likedIpAddresses
+      delete newlikedIpAddresses[clientIP]
+
       set(ref(database, `endorsementList/${id}`), {
         ...value,
         likes: value.likes - 1,
-        isLiked: false
+        likedIpAddresses: {
+          clientIP
+        }
       })
+
     }else{
+      
       set(ref(database, `endorsementList/${id}`), {
         ...value,
         likes: value.likes + 1,
-        isLiked: true
+        likedIpAddresses: {
+          ...likedIpAddresses,
+        }
       })
+
     }
   })
 
