@@ -6,24 +6,58 @@ const app = initializeApp(appSettings)
 const database = getDatabase(app)
 const endorsementListDB = ref(database, "endorsementList")
 
-
-
-
-
-
+const publishBtn = document.getElementById('publish-btn')
 let endorsementListEl = document.getElementById('endorsements__list')
-function appendItemToendorsementListEl(){
+const descInputEl = document.getElementById('desc-field')
+const fromInputEl = document.getElementById('from-field')
+const toInputEl = document.getElementById('to-field')
 
+// fetch data from endorsementList
+onValue(endorsementListDB, (snapshot) => {
+  if(snapshot.exists()){
+    let items = Object.entries(snapshot.val())
+    clearEndorsementListEl()
+    console.log(items)
+    items.map(item => appendItemToendorsementListEl(item))
+  }
+})
+
+
+// insert data into endorsementList
+publishBtn.addEventListener('click', () => {
+  const newEndorsement = {
+    desc: descInputEl.value,
+    from: fromInputEl.value,
+    to: toInputEl.value,
+    likes: 0
+  }
+  push(endorsementListDB, newEndorsement)
+  clearInputFields()
+})
+
+function clearInputFields(){
+  descInputEl.value  = ""
+  fromInputEl.value = ""
+  toInputEl.value = ""
+}
+
+function clearEndorsementListEl(){
+  endorsementListEl.innerHTML = ""
+}
+
+
+function appendItemToendorsementListEl(item){
+  const [id, value] = item
   let itemEl = document.createElement('div')
   itemEl.className = "item"
 
   const toEl = document.createElement('h4')
   toEl.className = 'to'
-  toEl.textContent = 'Leanne'
+  toEl.textContent = value.to
   itemEl.appendChild(toEl)
 
   const paraEl = document.createElement('p')
-  paraEl.textContent = 'Leanne! Thank you so much for helping me with the March accounting. Saved so much time because of you! 💜 Frode'
+  paraEl.textContent = value.desc
   itemEl.appendChild(paraEl)
 
   const fromHeartEl = document.createElement('div')
@@ -31,7 +65,7 @@ function appendItemToendorsementListEl(){
 
   const fromEl = document.createElement('h4')
   fromEl.className = 'from'
-  fromEl.textContent = 'Frode'
+  fromEl.textContent = value.from
   fromHeartEl.appendChild(fromEl)
 
   const heartSpan = document.createElement('span')
@@ -39,7 +73,7 @@ function appendItemToendorsementListEl(){
   fromHeartEl.appendChild(heartSpan)
 
   const bEl = document.createElement('b')
-  bEl.textContent = '5'
+  bEl.textContent = (value.likes > 0) ? value.likes : ""
   fromHeartEl.appendChild(bEl)
 
   itemEl.appendChild(fromHeartEl)
@@ -48,4 +82,3 @@ function appendItemToendorsementListEl(){
 
 }
 
-appendItemToendorsementListEl()
