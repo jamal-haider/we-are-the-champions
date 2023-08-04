@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, set, } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 import { appSettings } from "./firebaseDB.js"
 
 const app = initializeApp(appSettings)
@@ -17,18 +17,23 @@ onValue(endorsementListDB, (snapshot) => {
   if(snapshot.exists()){
     let items = Object.entries(snapshot.val())
     clearEndorsementListEl()
-    console.log(items)
     items.map(item => appendItemToendorsementListEl(item))
   }
 })
 
-
 // insert data into endorsementList
 publishBtn.addEventListener('click', () => {
+
+  if(descInputEl.value === ''){
+    alert('Please type some description')
+    return false
+  }
+
   const newEndorsement = {
     desc: descInputEl.value,
     from: fromInputEl.value,
     to: toInputEl.value,
+    isLiked: false,
     likes: 0
   }
   push(endorsementListDB, newEndorsement)
@@ -44,7 +49,6 @@ function clearInputFields(){
 function clearEndorsementListEl(){
   endorsementListEl.innerHTML = ""
 }
-
 
 function appendItemToendorsementListEl(item){
   const [id, value] = item
@@ -70,6 +74,22 @@ function appendItemToendorsementListEl(item){
 
   const heartSpan = document.createElement('span')
   heartSpan.textContent = `🖤`
+  heartSpan.addEventListener('click', () => {
+    if(value.isLiked){
+      set(ref(database, `endorsementList/${id}`), {
+        ...value,
+        likes: value.likes - 1,
+        isLiked: false
+      })
+    }else{
+      set(ref(database, `endorsementList/${id}`), {
+        ...value,
+        likes: value.likes + 1,
+        isLiked: true
+      })
+    }
+  })
+
   fromHeartEl.appendChild(heartSpan)
 
   const bEl = document.createElement('b')

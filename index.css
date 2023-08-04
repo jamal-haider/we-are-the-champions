@@ -56,22 +56,27 @@ html, body{
   opacity: .7;
 }
 
-.form .desc{
+.desc{
   grid-column: 1 / span 2;
   margin-top: 1.5em;
   resize: none;
 }
 
-.form .publish-btn{
+.publish-btn{
   grid-column: 1 / span 2;
   padding: .9em;
   background-color: #28A9F1;
-  color: #04131C;
+  color: #ffffff;
   border-radius: 5px;
   font-family: inherit;
   font-size: 1.3em;
   font-weight: 700;
   border: none;
+  cursor: pointer;
+}
+
+.publish-btn:hover{
+  background-color: #40b1ee;
 }
 
 .endorsements{
