@@ -73,3 +73,55 @@ html, body{
   font-weight: 700;
   border: none;
 }
+
+.endorsements{
+  margin-top: 2em;
+  
+}
+
+.endorsements h2{
+  color: white;
+  text-align: center;
+  font-weight: 500;
+}
+
+
+.item{
+  margin-top: 1em;
+  background-color: #FFFFFF;
+  color: #1B1924;
+  padding: 1em;
+}
+
+.item p{
+  line-height: 21px;
+}
+.item .to {
+  margin: 15px 0;
+}
+
+.item .from {
+  margin: 15px 0 10px;
+}
+
+.from-heart{
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+
+.from-heart span{
+  margin-left: auto;
+}
+
+.from-heart b{
+  font-size: 1.1em;
+  margin-left: 5px;
+  margin-top: 4px;
+  font-family: sans-serif;
+
+}
+
+.from-heart span:hover{
+  cursor: pointer;
+}
