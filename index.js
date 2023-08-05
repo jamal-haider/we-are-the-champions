@@ -25,6 +25,8 @@ onValue(endorsementListDB, (snapshot) => {
   if(snapshot.exists()){
     let items = Object.entries(snapshot.val())
     clearEndorsementListEl()
+    // items.reverse()
+    console.log(items)
     items.map(item => appendItemToendorsementListEl(item))
   }
 })
