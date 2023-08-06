@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, set, } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, set, remove} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 import { appSettings } from "./firebaseDB.js"
 
 const app = initializeApp(appSettings)
@@ -25,9 +25,7 @@ onValue(endorsementListDB, (snapshot) => {
   if(snapshot.exists()){
     let items = Object.entries(snapshot.val())
     clearEndorsementListEl()
-    // items.reverse()
-    console.log(items)
-    items.map(item => appendItemToendorsementListEl(item))
+    items.reverse().map(item => appendItemToendorsementListEl(item))
   }
 })
 
@@ -43,7 +41,6 @@ publishBtn.addEventListener('click', () => {
     desc: descInputEl.value,
     from: fromInputEl.value,
     to: toInputEl.value,
-    likes: 0
   }
   push(endorsementListDB, newEndorsement)
   clearInputFields()
@@ -84,30 +81,13 @@ function appendItemToendorsementListEl(item){
   const heartSpan = document.createElement('span')
   heartSpan.textContent = `🖤`
   heartSpan.addEventListener('click', () => {
-
-    if('likedIpAddresses' in value && value.likedIpAddresses.includes(clientIP)){
-      
-      const newlikedIpAddresses = value.likedIpAddresses
-      delete newlikedIpAddresses[clientIP]
-
-      set(ref(database, `endorsementList/${id}`), {
-        ...value,
-        likes: value.likes - 1,
-        likedIpAddresses: {
-          clientIP
-        }
-      })
-
+    
+    if('likedIpAddresses' in value){
+      const likedIpAddressesArray = Object.values(value.likedIpAddresses)
+      if(likedIpAddressesArray.includes(clientIP))
+        remove(ref(database, `endorsementList/${id}/likedIpAddresses`), clientIP)
     }else{
-      
-      set(ref(database, `endorsementList/${id}`), {
-        ...value,
-        likes: value.likes + 1,
-        likedIpAddresses: {
-          ...likedIpAddresses,
-        }
-      })
-
+      push(ref(database, `endorsementList/${id}/likedIpAddresses`), clientIP)
     }
   })
 
