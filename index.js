@@ -78,23 +78,23 @@ function appendItemToendorsementListEl(item){
   fromEl.textContent = value.from
   fromHeartEl.appendChild(fromEl)
 
+  let likedIpAddressesArray = []
+  if('likedIpAddresses' in value){
+    likedIpAddressesArray = Object.values(value.likedIpAddresses)
+  }
+
   const heartSpan = document.createElement('span')
   heartSpan.textContent = `🖤`
   heartSpan.addEventListener('click', () => {
-    if('likedIpAddresses' in value){
-      const likedIpAddressesArray = Object.values(value.likedIpAddresses)
-      if(likedIpAddressesArray.includes(clientIP))
-        remove(ref(database, `endorsementList/${id}/likedIpAddresses`), clientIP)
+    if(likedIpAddressesArray.includes(clientIP)){
+      remove(ref(database, `endorsementList/${id}/likedIpAddresses`), clientIP)
     }else{
       push(ref(database, `endorsementList/${id}/likedIpAddresses`), clientIP)
     }
   })
 
   fromHeartEl.appendChild(heartSpan)
-  let likes = ""
-  if('likedIpAddresses' in value){
-    likes = Object.keys(value.likedIpAddresses).length
-  }
+  let likes = likedIpAddressesArray.length > 0 ? likedIpAddressesArray.length : ""
   const bEl = document.createElement('b')
   bEl.textContent = likes
   fromHeartEl.appendChild(bEl)

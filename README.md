@@ -5,7 +5,7 @@ A practice base project that allows to publish the endorsements. The form contai
 ## Stretch Goals
 
 - Simple input form with button to enter the data.
-- Fetches the records from firebase database in reverse order.
+- Fetches the records from firebase realtime-database and shows in reverse order.
 - Like and dislike functionality for users.
 
 ## 🛠 Skills
