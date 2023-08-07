@@ -7,6 +7,8 @@ A practice base project that allows to publish the endorsements. The form contai
 - Simple input form with button to enter the data.
 - Fetches the records from firebase realtime-database and shows in reverse order.
 - Like and dislike functionality for users.
+- Mobile-first design
+- Desktop version (design)
 
 ## 🛠 Skills
 Javascript, Firebase, HTML, CSS...

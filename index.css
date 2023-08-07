@@ -22,7 +22,6 @@ html, body{
   align-items: center;
   gap: 1em;
   color: white;
-  
   width: 100%;
 }
 
@@ -31,7 +30,6 @@ html, body{
 }
 
 .form{
-  
   display: grid;
   grid-template-columns: auto auto;
   gap: 1em;
@@ -40,7 +38,7 @@ html, body{
 .form input[type='text'], .desc{
   background-color: #444059;
   color: #ececec;
-  padding: .8em;
+  padding: 1em;
   border: none;
   border-radius: 5px;
   width: 100%;
@@ -129,3 +127,55 @@ html, body{
 .from-heart span:hover{
   cursor: pointer;
 }
+
+
+
+
+/* desktop version */
+@media screen and (min-width: 600px){
+
+  .container{
+    max-width: 1200px;      
+    display: flex;
+  }
+
+  .header{
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+  }
+
+  .form{
+    margin-top: 1.5em;
+    grid-template-columns: auto auto auto;
+    gap: 1.25em;
+  }
+
+  .desc{
+    grid-column: 1 / span 2;
+    grid-row: 1 / 4;
+    margin: 0;
+  }
+  
+  .from-to, .publish-btn{
+    grid-column: 3 / 4;
+    font-size: 1.25em;
+  }
+  
+  .endorsements h2{
+    margin: 1.15em 0;
+  }
+
+  .endorsements__list{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1em;
+  }
+
+  .item{
+    width: 
+  }
+}
+
+
+
