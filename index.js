@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, set, remove} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
-import { appSettings } from "./firebaseDB.js"
+import { getDatabase, ref, push, onValue, remove} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { appSettings } from "./appSettings.js"
 
 const app = initializeApp(appSettings)
 const database = getDatabase(app)
@@ -78,12 +78,15 @@ function appendItemToendorsementListEl(item){
   fromEl.textContent = value.from
   fromHeartEl.appendChild(fromEl)
 
-  let likedIpAddressesArray
-  if(value.likedIpAddresses){
-    likedIpAddressesArray = Object.entries(value.likedIpAddresses)
-  }else{
-    likedIpAddressesArray = []
-  }
+  const likedIpAddressesArray = ('likedIpAddresses' in value)
+  ? Object.entries(value.likedIpAddresses)
+  : []
+  // let likedIpAddressesArray
+  // if(value.likedIpAddresses){
+  //   likedIpAddressesArray = Object.entries(value.likedIpAddresses)
+  // }else{
+  //   likedIpAddressesArray = []
+  // }
 
   const heartSpan = document.createElement('span')
   heartSpan.textContent = `🖤`
