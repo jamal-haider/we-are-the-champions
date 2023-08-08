@@ -170,11 +170,15 @@ html, body{
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 1em;
+    height: auto;
   }
 
   .item{
-    width: 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
+
 }
 
 
