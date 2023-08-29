@@ -61,6 +61,10 @@ function appendItemToendorsementListEl(item){
   let itemEl = document.createElement('div')
   itemEl.className = "item"
 
+  itemEl.addEventListener('dblclick', (e) => {
+    console.log(e)
+  })
+
   const toEl = document.createElement('h4')
   toEl.className = 'to'
   toEl.textContent = value.to
