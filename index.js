@@ -61,10 +61,6 @@ function appendItemToendorsementListEl(item){
   let itemEl = document.createElement('div')
   itemEl.className = "item"
 
-  itemEl.addEventListener('dblclick', (e) => {
-    console.log(e)
-  })
-
   const toEl = document.createElement('h4')
   toEl.className = 'to'
   toEl.textContent = value.to
@@ -120,6 +116,11 @@ function appendItemToendorsementListEl(item){
   fromHeartEl.appendChild(bEl)
 
   itemEl.appendChild(fromHeartEl)
+
+  itemEl.addEventListener("dblclick", () => {
+    const endorsementInDB = ref(database, `endorsementList/${id}`)
+    remove(endorsementInDB)
+  })
 
   endorsementListEl.appendChild(itemEl)
 
